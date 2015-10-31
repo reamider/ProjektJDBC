@@ -6,12 +6,6 @@ public class Sprzedaz {
 	
 	public Sprzedaz(){}
 	
-	public Sprzedaz(long klient_id_klient, long bilet_id_bilet){
-		super();
-		Klient.id_klient = Klient.id_klient;
-		Bilet.id_bilet = Bilet.id_bilet;
-	}
-	
 	public long getKlient_id_klient(){
 		return klient_id_klient;
 	}
