@@ -3,6 +3,7 @@ package main;
 public class Sprzedaz {
 	private long klient_id_klient;
 	private long bilet_id_bilet;
+	private String datagodzina;
 	
 	public Sprzedaz(){}
 	
@@ -20,5 +21,13 @@ public class Sprzedaz {
 	
 	public void setBilet_id_bilet(long bilet_id_bilet){
 		this.bilet_id_bilet = bilet_id_bilet;
+	}
+	
+	public String getDatagodzina(){
+		return datagodzina;
+	}
+	
+	public void setDatagodzina(String datagodzina){
+		this.datagodzina = datagodzina;
 	}
 }
