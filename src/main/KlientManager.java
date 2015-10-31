@@ -46,4 +46,29 @@ public class KlientManager {
 			e.printStackTrace();
 		}
 	}
+	
+	public Connection getConnection(){
+		return connection;
+	}
+	
+	public void wyczyscKlienta(){
+		try{
+			UsunKlientow.executeUpdate();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+	}
+	
+	public int DodajKlienta(Klient klient){
+		int licznik = 0;
+		try{
+			DodajKlienta.setString(1, klient.getImie());
+			DodajKlienta.setString(2, klient.getNazwisko());
+			DodajKlienta.setLong(3, klient.getNumertelefonu());
+			licznik = DodajKlienta.executeUpdate();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		return licznik;
+	}
 }
