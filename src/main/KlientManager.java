@@ -19,4 +19,31 @@ public class KlientManager {
 	private PreparedStatement UsunKlientow;
 	private PreparedStatement EdytujKlienta;
 	private PreparedStatement PobierzKlientow;
+	private Statement statement;
+	
+	public KlientManager(){
+		try{
+			connection = DriverManager.getConnection(url);
+			statement = connection.createStatement();
+			ResultSet rs = connection.getMetaData().getTables(null, null, null, null);
+			boolean tableExists = false;
+			while(rs.next()){
+				if("Klient".equalsIgnoreCase(rs.getString("TABLE_NAME"))){
+						tableExists = true;
+						break;
+			}
+		}
+			
+		if(!tableExists){
+			statement.executeUpdate(createTableKlient);
+		}
+		DodajKlienta = connection.prepareStatement("INSERT INTO Klient(imie, nazwisko, numertelefonu) VALUES (?, ?, ?)"); 
+		UsunKlienta = connection.prepareStatement("DELETE FROM Klient where id_klient = ?");
+		UsunKlientow = connection.prepareStatement("DELETE * FROM Klient");
+		EdytujKlienta = connection.prepareStatement("UPDATE Klient set imie = ?, nazwisko = ?, numertelefonu = ? where id_klient = ?");
+		PobierzKlientow = connection.prepareStatement("SELECT * FROM Klient");
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+	}
 }
