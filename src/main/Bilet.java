@@ -1,14 +1,14 @@
 package main;
 
 public class Bilet {
-	static long id_bilet;
+	private long id_bilet;
 	private String rodzaj;
-	private String cena;
+	private double cena;
 	private String opis;
 	
 	public Bilet() {}
 	
-	public Bilet(String rodzaj, String cena, String opis){
+	public Bilet(String rodzaj, double cena, String opis){
 		super();
 		this.rodzaj = rodzaj;
 		this.cena = cena;
@@ -31,11 +31,11 @@ public class Bilet {
 		this.rodzaj = rodzaj;
 	}
 	
-	public String getCena(){
+	public double getCena(){
 		return cena;
 	}
 	
-	public void setCena(String cena){
+	public void setCena(double cena){
 		this.cena = cena;
 	}
 	
