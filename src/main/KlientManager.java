@@ -71,4 +71,46 @@ public class KlientManager {
 		}
 		return licznik;
 	}
+	
+	public int UsunKlienta(Klient klient){
+		int licznik = 0;
+		try{
+			UsunKlienta.setLong(1, klient.getId());
+			licznik = UsunKlienta.executeUpdate();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		return licznik;
+	}
+	
+	public int EdytujKlienta(Klient klient){
+		int licznik = 0;
+		try{
+			EdytujKlienta.setString(1, klient.getImie());
+			EdytujKlienta.setString(2, klient.getNazwisko());
+			EdytujKlienta.setLong(3, klient.getNumertelefonu());
+			licznik = EdytujKlienta.executeUpdate();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		return licznik;
+	}
+	
+	public List<Klient> PobierzKlientow(){
+		List<Klient> klienci = new ArrayList<Klient>();
+		try{
+			ResultSet rs = PobierzKlientow.executeQuery();
+			while(rs.next()){
+				Klient k = new Klient();
+				k.setId(rs.getLong("id_klient"));
+				k.setImie(rs.getString("imie"));
+				k.setNazwisko(rs.getString("nazwisko"));
+				k.setNumertelefonu(rs.getLong("numertelefonu"));
+				klienci.add(k);
+			}
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		return klienci;
+	}
 }
