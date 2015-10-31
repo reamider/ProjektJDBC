@@ -1,10 +1,10 @@
 package main;
 
 public class Klient {
-	static long id_klient;
+	private long id_klient;
 	private String imie;
 	private String nazwisko;
-	private String numertelefonu;
+	private long numertelefonu;
 	
 	public Klient() {}
 	
@@ -39,11 +39,11 @@ public class Klient {
 		this.nazwisko = nazwisko;
 	}
 	
-	public String getNumertelefonu(){
+	public long getNumertelefonu(){
 		return numertelefonu;
 	}
 	
-	public void setNumertelefonu(String numertelefonu){
+	public void setNumertelefonu(long numertelefonu){
 		this.numertelefonu = numertelefonu;
 	}
 }
