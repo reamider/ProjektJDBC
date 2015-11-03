@@ -39,9 +39,9 @@ public class KlientManager {
 		}
 		DodajKlienta = connection.prepareStatement("INSERT INTO Klient(imie, nazwisko, numertelefonu) VALUES (?, ?, ?)"); 
 		UsunKlienta = connection.prepareStatement("DELETE FROM Klient where id_klient = ?");
-		UsunKlientow = connection.prepareStatement("DELETE * FROM Klient");
+		UsunKlientow = connection.prepareStatement("DELETE FROM Klient");
 		EdytujKlienta = connection.prepareStatement("UPDATE Klient set imie = ?, nazwisko = ?, numertelefonu = ? where id_klient = ?");
-		PobierzKlientow = connection.prepareStatement("SELECT * FROM Klient");
+		PobierzKlientow = connection.prepareStatement("SELECT FROM Klient");
 		}catch(SQLException e){
 			e.printStackTrace();
 		}

@@ -8,11 +8,10 @@ public class Klient {
 	
 	public Klient() {}
 	
-	public Klient(String imie, String nazwisko, String numer_telefonu){
+	public Klient(String imie, String nazwisko, long numer_telefonu){
 		super(); 
 		this.imie = imie;
 		this.nazwisko = nazwisko;
-		this.numertelefonu = numertelefonu;
 	}
 	
 	public long getId(){
