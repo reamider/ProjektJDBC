@@ -1,24 +1,25 @@
 package main;
 
 public class Klient {
-	private long id_klient;
+	private int id_klient;
 	private String imie;
 	private String nazwisko;
-	private long numertelefonu;
+	private String numertelefonu;
 	
 	public Klient() {}
 	
-	public Klient(String imie, String nazwisko, long numer_telefonu){
+	public Klient(String imie, String nazwisko, String numertelefonu){
 		super(); 
 		this.imie = imie;
 		this.nazwisko = nazwisko;
+		this.numertelefonu = numertelefonu;
 	}
 	
-	public long getId(){
+	public int getId(){
 		return id_klient;
 	}
 	
-	public void setId(long id_klient){
+	public void setId(int id_klient){
 		this.id_klient = id_klient;
 	}
 	
@@ -38,11 +39,11 @@ public class Klient {
 		this.nazwisko = nazwisko;
 	}
 	
-	public long getNumertelefonu(){
+	public String getNumertelefonu(){
 		return numertelefonu;
 	}
 	
-	public void setNumertelefonu(long numertelefonu){
+	public void setNumertelefonu(String numertelefonu){
 		this.numertelefonu = numertelefonu;
 	}
 }

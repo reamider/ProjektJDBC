@@ -10,10 +10,10 @@ KlientManager klientManager = new KlientManager();
 	
 	private final static String imie = "Jan";
 	private final static String nazwisko = "Kowalski";
-	private final static long numertelefonu = 501601701;
+	private final static String numertelefonu = "+48501601701";
 	private final static String imie2 = "Adam";
 	private final static String nazwisko2 = "Malinowski";
-	private final static long numertelefonu2 = 600700800;
+	private final static String numertelefonu2 = "+48600700800";
 	
 	
 	@Test
@@ -25,8 +25,6 @@ KlientManager klientManager = new KlientManager();
 	public void checkAdding(){
 		Klient klient = new Klient(imie, nazwisko, numertelefonu);
 		
-		klientManager.wyczyscKlienta();
-		assertEquals(1, klientManager.DodajKlienta(klient));
 		
 		List<Klient> k = klientManager.PobierzKlientow();
 		Klient aktualnyklient = k.get(0);
@@ -48,7 +46,7 @@ KlientManager klientManager = new KlientManager();
 		
 		aktualnyklient.setImie("Adrian");
 		aktualnyklient.setNazwisko("Malinowski");
-		aktualnyklient.setNumertelefonu(600700800);
+		aktualnyklient.setNumertelefonu("+48600700800");
 		
 		assertEquals(1, klientManager.EdytujKlienta(aktualnyklient));
 		
