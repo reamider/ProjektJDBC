@@ -12,10 +12,10 @@ KlientManager klientManager = new KlientManager();
 	
 	private final static String imie = "Jan";
 	private final static String nazwisko = "Kowalski";
-	private final static long numertelefonu = 501601701;
+	private final static String numertelefonu = "501601701";
 	private final static String imie2 = "Adam";
 	private final static String nazwisko2 = "Malinowski";
-	private final static long numertelefonu2 = 600700800;
+	private final static String numertelefonu2 = "600700800";
 	
 	
 	@Test

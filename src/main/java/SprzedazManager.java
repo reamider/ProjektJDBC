@@ -18,10 +18,8 @@ public class SprzedazManager {
 	private String createTableSprzedaz = "CREATE TABLE Sprzedaz(id_klient int, id_bilet int)";
 
 	private static PreparedStatement DodajSprzedaz;
-	private static PreparedStatement usunSprzedaz;
-	private static PreparedStatement UsunSprzedaze;
+	private static PreparedStatement UsunSprzedaz;
 	private static PreparedStatement PobierzSprzedaz;
-	private static PreparedStatement EdytujSprzedaz;
 	
 	private Statement statement;
 	
@@ -44,10 +42,8 @@ public class SprzedazManager {
 				statement.executeUpdate(createTableSprzedaz);
 			
 			DodajSprzedaz = connection.prepareStatement("INSERT INTO Sprzedaz(id_klient, id_bilet) VALUES (?, ?)");
-			UsunSprzedaze = connection.prepareStatement("DELETE FROM Sprzedaz");
-			usunSprzedaz = connection.prepareStatement("DELETE FROM Sprzedaz where id_klient = ? and id_bilet = ?");
+			UsunSprzedaz = connection.prepareStatement("DELETE FROM Sprzedaz");
 			PobierzSprzedaz = connection.prepareStatement("SELECT id_klient, id_bilet FROM Sprzedaz");
-			EdytujSprzedaz = connection.prepareStatement("UPDATE Sprzedaz set id_klient = ? , id_bilet = ?")
 			
 		} catch(SQLException e){
 			e.printStackTrace();
@@ -60,7 +56,7 @@ public class SprzedazManager {
 	
 	public static void wyczyscSprzedaz(){
 		try{
-			UsunSprzedaze.executeUpdate();
+			UsunSprzedaz.executeUpdate();
 		} catch(SQLException e){
 			e.printStackTrace();
 		}
@@ -77,19 +73,6 @@ public class SprzedazManager {
 		}
 		return licznik;
 	}
-	
-	public static int usunSprzedaz(Klient k, Bilet b){
-		int licznik = 0;
-		try{
-			usunSprzedaz.setInt(1, k.getId());
-			usunSprzedaz.setInt(2, b.getId());
-			licznik = usunSprzedaz.executeUpdate();
-		}catch(SQLException e){
-			e.printStackTrace();
-		}
-		return licznik;
-	}
-	
 	
 	public static List<Sprzedaz> PobierzSprzedaz(){
 		List<Sprzedaz> sprzedaz = new ArrayList<Sprzedaz>();
