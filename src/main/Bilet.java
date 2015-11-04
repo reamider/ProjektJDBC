@@ -1,7 +1,7 @@
 package main;
 
 public class Bilet {
-	private long id_bilet;
+	private int id_bilet;
 	private String rodzaj;
 	private double cena;
 	private String opis;
@@ -15,11 +15,11 @@ public class Bilet {
 		this.opis = opis;
 	}
 	
-	public long getId(){
+	public int getId(){
 		return id_bilet;
 	}
 	
-	public void setId(long id_bilet){
+	public void setId(int id_bilet){
 		this.id_bilet = id_bilet;
 	}
 	
