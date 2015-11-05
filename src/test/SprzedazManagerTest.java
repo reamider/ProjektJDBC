@@ -79,25 +79,4 @@ public class SprzedazManagerTest {
 
 		assertEquals(1, SprzedazManager.dodajSprzedaz(aktualnyklient, aktualnybilet));
 	}
-	
-	@Test
-	public void checkDeleteSprzedaz(){
-		Klient klient = new Klient(imie1, nazwisko1, numertelefonu1);
-		
-		klientManager.wyczyscKlienta();
-		assertEquals(1, klientManager.DodajKlienta(klient));
-		
-		List<Klient> k = klientManager.PobierzKlientow();
-		Klient aktualnyklient = k.get(0);
-		
-		Bilet bilet = new Bilet(rodzaj1, cena1, opis1);
-		
-		biletManager.wyczyscBilet();
-		assertEquals(1, biletManager.DodajBilet(bilet));
-		
-		List<Bilet> b = biletManager.PobierzBilety();
-		Bilet aktualnybilet = b.get(0);
-		
-		assertEquals(0, SprzedazManager.usunSprzedaz(aktualnyklient, aktualnybilet));
-	}
 }

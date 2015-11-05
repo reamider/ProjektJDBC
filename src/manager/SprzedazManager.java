@@ -15,13 +15,12 @@ import main.Bilet;
 public class SprzedazManager {
 	private static Connection connection;
 	private String url = "jdbc:hsqldb:hsql://localhost/";
-	private String createTableSprzedaz = "CREATE TABLE Sprzedaz(id_klient int, id_bilet int)";
+	private String createTableSprzedaz = "CREATE TABLE Sprzedaz(id_klient int references Klient(id_klient), id_bilet int references Bilet(id_bilet))";
 
 	private static PreparedStatement DodajSprzedaz;
 	private static PreparedStatement usunSprzedaz;
 	private static PreparedStatement UsunSprzedaze;
 	private static PreparedStatement PobierzSprzedaz;
-	private static PreparedStatement EdytujSprzedaz;
 	
 	private Statement statement;
 	
@@ -45,9 +44,8 @@ public class SprzedazManager {
 			
 			DodajSprzedaz = connection.prepareStatement("INSERT INTO Sprzedaz(id_klient, id_bilet) VALUES (?, ?)");
 			UsunSprzedaze = connection.prepareStatement("DELETE FROM Sprzedaz");
-			usunSprzedaz = connection.prepareStatement("DELETE FROM Sprzedaz where id_klient = ? and id_bilet = ?");
+			usunSprzedaz = connection.prepareStatement("DELETE FROM Sprzedaz where id_klient = ?, id_bilet = ?");
 			PobierzSprzedaz = connection.prepareStatement("SELECT id_klient, id_bilet FROM Sprzedaz");
-			EdytujSprzedaz = connection.prepareStatement("UPDATE Sprzedaz set id_klient = ? , id_bilet = ?")
 			
 		} catch(SQLException e){
 			e.printStackTrace();
@@ -89,7 +87,6 @@ public class SprzedazManager {
 		}
 		return licznik;
 	}
-	
 	
 	public static List<Sprzedaz> PobierzSprzedaz(){
 		List<Sprzedaz> sprzedaz = new ArrayList<Sprzedaz>();
