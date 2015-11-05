@@ -21,7 +21,9 @@ public class SprzedazManager {
 	private static PreparedStatement usunSprzedaz;
 	private static PreparedStatement UsunSprzedaze;
 	private static PreparedStatement PobierzSprzedaz;
-	
+	private static PreparedStatement EdytujSprzedaz;
+	private static PreparedStatement PobierzSprzedazPoKliencie;
+
 	private Statement statement;
 	
 	public SprzedazManager(){
@@ -43,9 +45,11 @@ public class SprzedazManager {
 				statement.executeUpdate(createTableSprzedaz);
 			
 			DodajSprzedaz = connection.prepareStatement("INSERT INTO Sprzedaz(id_klient, id_bilet) VALUES (?, ?)");
-			UsunSprzedaze = connection.prepareStatement("DELETE FROM Sprzedaz");
-			usunSprzedaz = connection.prepareStatement("DELETE FROM Sprzedaz where id_klient = ?, id_bilet = ?");
+			UsunSprzedaze = connection.prepareStatement("DELETE FROM Sprzedaz where id_klient = ?");
+			usunSprzedaz = connection.prepareStatement("DELETE FROM Sprzedaz where id_klient = ? and id_bilet = ?");
 			PobierzSprzedaz = connection.prepareStatement("SELECT id_klient, id_bilet FROM Sprzedaz");
+			PobierzSprzedazPoKliencie = connection.prepareStatement("SELECT id_klient, id_bilet FROM Sprzedaz WHERE id_klient = ?");
+			EdytujSprzedaz = connection.prepareStatement("UPDATE Sprzedaz SET id_bilet = ? WHERE id_klient = ?");
 			
 		} catch(SQLException e){
 			e.printStackTrace();
@@ -104,5 +108,41 @@ public class SprzedazManager {
 			e.printStackTrace();
 		}
 		return sprzedaz;
+	}
+	
+	public int EdytujSprzedaz(Klient k, Bilet b){
+		int licznik = 0;
+		try{
+			EdytujSprzedaz.setInt(1, b.getId());
+			EdytujSprzedaz.setInt(2, k.getId());
+			licznik = EdytujSprzedaz.executeUpdate();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		return licznik;
+	}
+	
+	//POBRANIE X NALEZACYCH DO Y - POBRANIE BILETOW PO KLIENCIE ZE SPRZEDAZY
+	public List<Bilet> PobierzSprzedazPoKliencie(Sprzedaz s) {
+		List<Bilet> bilety = new ArrayList<Bilet>();
+
+		try {
+
+			PobierzSprzedazPoKliencie.setInt(1, s.getId_klient());
+
+			ResultSet rs = PobierzSprzedazPoKliencie.executeQuery();
+
+			while (rs.next()) {
+				Bilet b = new Bilet();
+				b.setId(rs.getInt("id_bilet"));
+				b.setRodzaj(rs.getString("rodzaj"));
+				b.setCena(rs.getDouble("cena"));
+				bilety.add(b);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return bilety;
 	}
 }

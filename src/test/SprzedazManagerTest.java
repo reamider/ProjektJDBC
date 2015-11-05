@@ -30,6 +30,7 @@ public class SprzedazManagerTest {
 	}
 	
 	@Test
+	//DODANIE DO TABELI X + POBRANIE WSZYSTKICH KLIENTOW
 	public void checkAddKlient(){
 		Klient klient = new Klient(imie1, nazwisko1, numertelefonu1);
 		
@@ -45,6 +46,7 @@ public class SprzedazManagerTest {
 	}
 	
 	@Test
+	//DODANIE DO TABELI Y + POBRANIE WSZYSTKICH BILETOW
 	public void checkAddBilet(){
 		Bilet bilet = new Bilet(rodzaj1, cena1, opis1);
 		
