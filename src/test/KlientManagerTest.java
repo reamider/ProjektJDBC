@@ -24,13 +24,14 @@ KlientManager klientManager = new KlientManager();
 	}
 	
 	@Test
+	//DODANIE DO TABELI Y
 	public void checkAdding(){
 		Klient klient = new Klient(imie, nazwisko, numertelefonu);
 		
 		klientManager.wyczyscKlienta();
-		assertEquals(1, klientManager.DodajKlienta(klient));
+		assertEquals(1, klientManager.dodajKlienta(klient));
 		
-		List<Klient> k = klientManager.PobierzKlientow();
+		List<Klient> k = klientManager.pobierzKlientow();
 		Klient aktualnyklient = k.get(0);
 		
 		assertEquals(imie, aktualnyklient.getImie());
@@ -43,18 +44,18 @@ KlientManager klientManager = new KlientManager();
 		Klient klient = new Klient(imie, nazwisko, numertelefonu);
 
 		klientManager.wyczyscKlienta();
-		assertEquals(1, klientManager.DodajKlienta(klient));
+		assertEquals(1, klientManager.dodajKlienta(klient));
 		
-		List<Klient> k = klientManager.PobierzKlientow();
+		List<Klient> k = klientManager.pobierzKlientow();
 		Klient aktualnyklient = k.get(0);
 		
 		aktualnyklient.setImie(imie2);
 		aktualnyklient.setNazwisko(nazwisko2);
 		aktualnyklient.setNumertelefonu(numertelefonu2);
 		
-		assertEquals(1, klientManager.EdytujKlienta(aktualnyklient));
+		assertEquals(1, klientManager.edytujKlienta(aktualnyklient));
 		
-		List<Klient> k2 = klientManager.PobierzKlientow();
+		List<Klient> k2 = klientManager.pobierzKlientow();
 		Klient aktualnyklient2 = k2.get(0);
 		
 		assertEquals(imie2, aktualnyklient2.getImie());
@@ -68,12 +69,12 @@ KlientManager klientManager = new KlientManager();
 		Klient klient = new Klient(imie, nazwisko, numertelefonu);
 
 		klientManager.wyczyscKlienta();
-		assertEquals(1, klientManager.DodajKlienta(klient));
+		assertEquals(1, klientManager.dodajKlienta(klient));
 		
-		List<Klient> k = klientManager.PobierzKlientow();
+		List<Klient> k = klientManager.pobierzKlientow();
 		Klient aktualnyklient = k.get(0);
 
-		assertEquals(1, klientManager.UsunKlienta(aktualnyklient));
+		assertEquals(1, klientManager.usunKlienta(aktualnyklient));
 
 	}
 }

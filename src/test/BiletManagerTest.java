@@ -24,13 +24,14 @@ BiletManager biletManager = new BiletManager();
 	}
 	
 	@Test
+	//DODANIE DO TABELI X
 	public void checkAdding(){
 		Bilet bilet = new Bilet(rodzaj, cena, opis);
 		
 		biletManager.wyczyscBilet();
-		assertEquals(1, biletManager.DodajBilet(bilet));
+		assertEquals(1, biletManager.dodajBilet(bilet));
 		
-		List<Bilet> b = biletManager.PobierzBilety();
+		List<Bilet> b = biletManager.pobierzBilety();
 		Bilet aktualnybilet = b.get(0);
 		
 		assertEquals(rodzaj, aktualnybilet.getRodzaj());
@@ -43,18 +44,18 @@ BiletManager biletManager = new BiletManager();
 		Bilet bilet = new Bilet(rodzaj, cena, opis);
 
 		biletManager.wyczyscBilet();
-		assertEquals(1, biletManager.DodajBilet(bilet));
+		assertEquals(1, biletManager.dodajBilet(bilet));
 		
-		List<Bilet> b = biletManager.PobierzBilety();
+		List<Bilet> b = biletManager.pobierzBilety();
 		Bilet aktualnybilet = b.get(0);
 		
 		aktualnybilet.setRodzaj(rodzaj2);
 		aktualnybilet.setCena(cena2);
 		aktualnybilet.setOpis(opis2);
 		
-		assertEquals(1, biletManager.EdytujBilet(aktualnybilet));
+		assertEquals(1, biletManager.edytujBilet(aktualnybilet));
 		
-		List<Bilet> b2 = biletManager.PobierzBilety();
+		List<Bilet> b2 = biletManager.pobierzBilety();
 		Bilet aktualnybilet2 = b2.get(0);
 		
 		assertEquals(rodzaj2, aktualnybilet2.getRodzaj());
@@ -68,12 +69,12 @@ BiletManager biletManager = new BiletManager();
 		Bilet bilet = new Bilet(rodzaj, cena, opis);
 
 		biletManager.wyczyscBilet();
-		assertEquals(1, biletManager.DodajBilet(bilet));
+		assertEquals(1, biletManager.dodajBilet(bilet));
 		
-		List<Bilet> b = biletManager.PobierzBilety();
+		List<Bilet> b = biletManager.pobierzBilety();
 		Bilet aktualnybilet = b.get(0);
 
-		assertEquals(1, biletManager.UsunBilet(aktualnybilet));
+		assertEquals(1, biletManager.usunBilet(aktualnybilet));
 
 	}
 }

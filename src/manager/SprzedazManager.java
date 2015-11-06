@@ -9,20 +9,19 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import main.Sprzedaz;
-import main.Klient;
 import main.Bilet;
 
 public class SprzedazManager {
 	private static Connection connection;
 	private String url = "jdbc:hsqldb:hsql://localhost/";
-	private String createTableSprzedaz = "CREATE TABLE Sprzedaz(id_klient int references Klient(id_klient), id_bilet int references Bilet(id_bilet))";
+	private String createTableSprzedaz = "CREATE TABLE Sprzedaz(id_klient int foreign key references Klient(id_klient), id_bilet int foreign key references Bilet(id_bilet))";
 
-	private static PreparedStatement DodajSprzedaz;
+	private static PreparedStatement dodajSprzedaz;
 	private static PreparedStatement usunSprzedaz;
-	private static PreparedStatement UsunSprzedaze;
-	private static PreparedStatement PobierzSprzedaz;
-	private static PreparedStatement EdytujSprzedaz;
-	private static PreparedStatement PobierzSprzedazPoKliencie;
+	private static PreparedStatement usunSprzedaze;
+	private static PreparedStatement pobierzSprzedaz;
+	private static PreparedStatement edytujSprzedaz;
+	private static PreparedStatement pobierzSprzedazPoKliencie;
 
 	private Statement statement;
 	
@@ -44,12 +43,12 @@ public class SprzedazManager {
 			if(!tableExists)
 				statement.executeUpdate(createTableSprzedaz);
 			
-			DodajSprzedaz = connection.prepareStatement("INSERT INTO Sprzedaz(id_klient, id_bilet) VALUES (?, ?)");
-			UsunSprzedaze = connection.prepareStatement("DELETE FROM Sprzedaz where id_klient = ?");
+			dodajSprzedaz = connection.prepareStatement("INSERT INTO Sprzedaz(id_klient, id_bilet) VALUES (?, ?)");
+			edytujSprzedaz = connection.prepareStatement("UPDATE Sprzedaz SET id_bilet = ? WHERE id_klient = ?");
+			usunSprzedaze = connection.prepareStatement("DELETE FROM Sprzedaz");
 			usunSprzedaz = connection.prepareStatement("DELETE FROM Sprzedaz where id_klient = ? and id_bilet = ?");
-			PobierzSprzedaz = connection.prepareStatement("SELECT id_klient, id_bilet FROM Sprzedaz");
-			PobierzSprzedazPoKliencie = connection.prepareStatement("SELECT id_klient, id_bilet FROM Sprzedaz WHERE id_klient = ?");
-			EdytujSprzedaz = connection.prepareStatement("UPDATE Sprzedaz SET id_bilet = ? WHERE id_klient = ?");
+			pobierzSprzedaz = connection.prepareStatement("SELECT id_klient, id_bilet FROM Sprzedaz");
+			pobierzSprzedazPoKliencie = connection.prepareStatement("SELECT id_klient, id_bilet FROM Sprzedaz WHERE id_klient = ?");
 			
 		} catch(SQLException e){
 			e.printStackTrace();
@@ -60,43 +59,58 @@ public class SprzedazManager {
 		return connection;
 	}
 	
+	//USUNIECIE X Z Y
 	public static void wyczyscSprzedaz(){
 		try{
-			UsunSprzedaze.executeUpdate();
+			usunSprzedaze.executeUpdate();
 		} catch(SQLException e){
 			e.printStackTrace();
 		}
 	}
 	
-	public static int dodajSprzedaz(Klient k, Bilet b){
+	//PRZYPISANIE X DO Y
+	public static int dodajSprzedaz(Sprzedaz s){
 		int licznik = 0;
 		try {
-			DodajSprzedaz.setInt(1, k.getId());
-			DodajSprzedaz.setInt(2, b.getId());
-			licznik = DodajSprzedaz.executeUpdate();
+			dodajSprzedaz.setInt(1, s.getId_klient());
+			dodajSprzedaz.setInt(2, s.getId_bilet());
+			licznik = dodajSprzedaz.executeUpdate();
 		} catch(SQLException e){
 			e.printStackTrace();
 		}
 		return licznik;
 	}
 	
-	public static int usunSprzedaz(Klient k, Bilet b){
+	public int edytujSprzedaz(Sprzedaz s){
 		int licznik = 0;
 		try{
-			usunSprzedaz.setInt(1, k.getId());
-			usunSprzedaz.setInt(2, b.getId());
-			licznik = usunSprzedaz.executeUpdate();
+			edytujSprzedaz.setInt(1, s.getId_klient());
+			edytujSprzedaz.setInt(2, s.getId_bilet());
+			licznik = edytujSprzedaz.executeUpdate();
 		}catch(SQLException e){
 			e.printStackTrace();
 		}
 		return licznik;
 	}
 	
-	public static List<Sprzedaz> PobierzSprzedaz(){
-		List<Sprzedaz> sprzedaz = new ArrayList<Sprzedaz>();
-		
+	
+	public static int usunSprzedaz(Sprzedaz s){
+		int licznik = 0;
 		try{
-			ResultSet rs = PobierzSprzedaz.executeQuery();
+			usunSprzedaz.setInt(1, s.getId_klient());
+			usunSprzedaz.setInt(2, s.getId_bilet());
+			licznik = usunSprzedaze.executeUpdate();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		return licznik;
+	}
+	
+	//POBRANIE WSZYSTKICH X
+	public static List<Sprzedaz> pobierzSprzedaz(){
+		List<Sprzedaz> sprzedaz = new ArrayList<Sprzedaz>();
+		try{
+			ResultSet rs = pobierzSprzedaz.executeQuery();
 			
 			while(rs.next()){
 				Sprzedaz s = new Sprzedaz();
@@ -110,27 +124,15 @@ public class SprzedazManager {
 		return sprzedaz;
 	}
 	
-	public int EdytujSprzedaz(Klient k, Bilet b){
-		int licznik = 0;
-		try{
-			EdytujSprzedaz.setInt(1, b.getId());
-			EdytujSprzedaz.setInt(2, k.getId());
-			licznik = EdytujSprzedaz.executeUpdate();
-		}catch(SQLException e){
-			e.printStackTrace();
-		}
-		return licznik;
-	}
-	
 	//POBRANIE X NALEZACYCH DO Y - POBRANIE BILETOW PO KLIENCIE ZE SPRZEDAZY
-	public List<Bilet> PobierzSprzedazPoKliencie(Sprzedaz s) {
+	public List<Bilet> pobierzSprzedazPoKliencie(Sprzedaz s) {
 		List<Bilet> bilety = new ArrayList<Bilet>();
 
 		try {
 
-			PobierzSprzedazPoKliencie.setInt(1, s.getId_klient());
+			pobierzSprzedazPoKliencie.setInt(1, s.getId_klient());
 
-			ResultSet rs = PobierzSprzedazPoKliencie.executeQuery();
+			ResultSet rs = pobierzSprzedazPoKliencie.executeQuery();
 
 			while (rs.next()) {
 				Bilet b = new Bilet();

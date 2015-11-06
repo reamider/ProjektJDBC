@@ -6,6 +6,11 @@ public class Sprzedaz {
 	
 	public Sprzedaz(){}
 	
+	public Sprzedaz(int id_klient, int id_bilet){
+		this.id_klient = id_klient;
+		this.id_bilet = id_bilet;
+	}
+	
 	public int getId_klient(){
 		return id_klient;
 	}
